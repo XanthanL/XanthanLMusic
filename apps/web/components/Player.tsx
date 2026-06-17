@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Song, XANTHANL_PLAYLIST } from '../config/music';
+import { XANTHANL_PLAYLIST } from '../config/music';
+import type { Song } from '../config/music';
 
 export default function Player() {
   const [playlist] = useState<Song[]>(XANTHANL_PLAYLIST);

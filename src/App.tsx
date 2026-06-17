@@ -5,7 +5,6 @@ import { Hero } from './sections/Hero';
 import { Music } from './sections/Music';
 import { About } from './sections/About';
 import { Footer } from './sections/Footer';
-import Player from '../apps/web/components/Player';
 
 function ScrollProgress() {
   const { scrollYProgress } = useScroll();
@@ -42,7 +41,6 @@ function App() {
         <Hero />
         <Music />
         <About />
-        <Player />
         <Footer />
       </main>
     </div>
