@@ -1,13 +1,4 @@
-import { motion } from 'framer-motion';
-import { Instagram, Twitter, Youtube, Music2 } from 'lucide-react';
 import { ScrollReveal } from '../components/ScrollReveal';
-
-const socialLinks = [
-  { icon: Instagram, href: 'https://instagram.com', label: 'Instagram' },
-  { icon: Twitter, href: 'https://twitter.com', label: 'Twitter' },
-  { icon: Youtube, href: 'https://youtube.com', label: 'YouTube' },
-  { icon: Music2, href: 'https://spotify.com', label: 'Spotify' },
-];
 
 export function Footer() {
   return (
@@ -33,26 +24,6 @@ export function Footer() {
               Independent synth-pop and neo-psychedelic sounds from the mind of XanthanL. 
               Drift into the Electric Mirage.
             </p>
-          </ScrollReveal>
-
-          {/* Social links */}
-          <ScrollReveal delay={0.2}>
-            <div className="flex items-center gap-6 mb-8">
-              {socialLinks.map((social) => (
-                <motion.a
-                  key={social.label}
-                  href={social.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  whileHover={{ y: -5, scale: 1.1 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/60 hover:text-[var(--neon-purple)] hover:border-[var(--neon-purple)] hover:bg-[var(--neon-purple)]/10 transition-colors"
-                  aria-label={social.label}
-                >
-                  <social.icon className="w-5 h-5" />
-                </motion.a>
-              ))}
-            </div>
           </ScrollReveal>
         </div>
 

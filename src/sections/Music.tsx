@@ -2,17 +2,23 @@ import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Play, Pause, SkipBack, SkipForward, Volume2 } from 'lucide-react';
 import { ScrollReveal } from '../components/ScrollReveal';
-import { XANTHANL_PLAYLIST, Song } from '../../apps/web/config/music';
+import { XANTHANL_PLAYLIST } from '../../apps/web/config/music';
 
 export function Music() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
-  const [volume, setVolume] = useState(0.8);
+  const [volume, setVolume] = useState(0.5);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   const currentSong = XANTHANL_PLAYLIST[currentIndex];
+
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.volume = 0.5;
+    }
+  }, []);
 
   const togglePlay = () => {
     if (!audioRef.current) return;
@@ -194,7 +200,7 @@ export function Music() {
                       max={duration || 100}
                       value={currentTime}
                       onChange={handleSeek}
-                      className="w-full h-1 bg-white/10 rounded-lg appearance-none cursor-pointer accent-[var(--neon-purple)]"
+                      className="w-full h-1 bg-white/10 rounded-lg appearance-none cursor-pointer accent-[var(--neon-purple)] [&::-webkit-slider-thumb]:w-2 [&::-webkit-slider-thumb]:h-2 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:rounded-full"
                     />
                     <div className="flex justify-between text-[10px] font-['Orbitron'] text-white/40 tracking-widest">
                       <span>{formatTime(currentTime)}</span>
@@ -246,7 +252,7 @@ export function Music() {
                         setVolume(v);
                         if (audioRef.current) audioRef.current.volume = v;
                       }}
-                      className="w-24 h-1 bg-white/10 rounded-lg appearance-none cursor-pointer accent-white/40"
+                      className="w-24 h-1 bg-white/10 rounded-lg appearance-none cursor-pointer accent-white/40 [&::-webkit-slider-thumb]:w-2 [&::-webkit-slider-thumb]:h-2 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:rounded-full"
                     />
                   </div>
                 </div>
