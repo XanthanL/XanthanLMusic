@@ -1,0 +1,30 @@
+
+## 2. 技术栈选型建议 (待定)
+*   **前端 (Frontend):**
+    *   框架：React (Next.js) 或 Vue 3 (Nuxt.js) —— 保证优秀的 SEO 支持与首屏加载速度。
+    *   样式：Tailwind CSS —— 快速构建响应式 UI。
+    *   状态管理：Zustand (React) 或 Pinia (Vue)。
+*   **后端 (Backend):**
+    *   语言/框架：Node.js (NestJS) 或 Go (Gin) 或 Python (FastAPI) —— 兼顾开发效率与运行性能。
+    *   API 规范：RESTful API 或 GraphQL。
+*   **数据库与缓存 (Database & Cache):**
+    *   主数据库：PostgreSQL 或 MySQL (关系型，保障数据一致性)。
+    *   缓存/队列：Redis (用于 Session 存储、高速缓存及简单消息队列)。
+*   **运维与部署 (DevOps):**
+    *   容器化：Docker & Docker Compose (本地开发与生产环境一致性)。
+    *   CI/CD：GitHub Actions 或 GitLab CI。
+
+## 3. 核心设计原则
+1.  **单一职责原则 (SRP):** 每个服务、模块、类甚至函数只负责一项职责。
+2.  **高内聚低耦合:** 模块间通过定义良好的接口/API 进行通信，避免直接依赖内部实现。
+3.  **安全性设计:** 
+    *   全站启用 HTTPS。
+    *   使用 JWT 或 Session 进行身份验证，敏感接口进行权限拦截。
+    *   输入严格校验，防止 SQL 注入与 XSS 攻击。
+4.  **可观测性 (Observability):** 统一的日志记录（如 Winston/Zap），关键业务埋点，以及基础的健康检查 (Health Check) 接口。
+
+## 4. 后续步骤
+1. 确定技术栈细节。
+2. 初始化代码仓库并配置基础 Linter (ESLint/Prettier) 与 Git Hooks (Husky)。
+3. 搭建数据库基础 Schema。
+4. 编写第一个 Hello World API 与前端联调。
