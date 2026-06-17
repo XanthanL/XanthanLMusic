@@ -7,7 +7,7 @@ const albums = [
     id: 1,
     title: 'Electric Mirage',
     year: '2024',
-    image: '/images/album-uncertainty.jpg',
+    image: 'images/album-uncertainty.jpg',
     description: 'A hypnotic fusion of synth-pop and neo-psychedelia. Explore the shimmering textures of disco-infused rhythms and ethereal soundscapes.',
     tracks: [
       { name: 'Electric Mirage', type: 'Single' },

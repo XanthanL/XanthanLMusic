@@ -68,7 +68,7 @@ export function About() {
                 {/* Main image */}
                 <div className="relative aspect-[3/4] rounded-xl overflow-hidden">
                   <img
-                    src="/images/about-mask.jpg"
+                    src="images/about-mask.jpg"
                     alt="Blood Cultures - The Mask"
                     className="w-full h-full object-cover"
                   />

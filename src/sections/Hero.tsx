@@ -78,7 +78,7 @@ export function Hero() {
           className="relative w-[300px] h-[400px] md:w-[400px] md:h-[550px] lg:w-[500px] lg:h-[700px]"
         >
           <img
-            src="/images/hero-mask.jpg"
+            src="images/hero-mask.jpg"
             alt="Mysterious mask silhouette"
             className="w-full h-full object-cover"
             style={{
