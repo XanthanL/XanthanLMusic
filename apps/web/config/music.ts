@@ -11,20 +11,44 @@ export interface Song {
 export const XANTHANL_PLAYLIST: Song[] = [
   {
     id: "1",
-    title: "XanthanL's Theme",
+    title: "Electric Mirage",
     artist: "XanthanL",
-    src: "/music/theme.mp3", // 请确保 public/music/theme.mp3 存在
-    cover: "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?q=80&w=600&auto=format&fit=crop",
+    src: "/music/Electric Mirage.mp3",
+    cover: "/images/album-uncertainty.jpg",
     duration: "03:45",
-    lyrics: "[00:00.00]XanthanL's Theme\n[00:04.00]作曲 : XanthanL\n[00:08.00]编曲 : XanthanL\n[00:12.00]欢迎来到我的音乐世界\n[00:18.00]感受旋律的律动...\n[00:24.00]这是属于我们的空间"
+    lyrics: "[00:00.00]Electric Mirage\n[00:04.00]作曲 : XanthanL\n[00:08.00]编曲 : XanthanL\n[00:12.00]欢迎来到我的音乐世界"
   },
   {
     id: "2",
-    title: "午夜极光 (Midnight Aurora)",
+    title: "Glass Candle",
     artist: "XanthanL",
-    src: "/music/midnight_aurora.mp3", // 请确保 public/music/midnight_aurora.mp3 存在
-    cover: "https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?q=80&w=600&auto=format&fit=crop",
+    src: "/music/Glass Candle.mp3",
+    cover: "/images/album-uncertainty.jpg",
     duration: "04:12",
-    lyrics: "[00:00.00]午夜极光\n[00:05.00]制作人 : XanthanL\n[00:15.00]极光在夜空中交织\n[00:25.00]音符在黑暗中闪烁"
+    lyrics: "[00:00.00]Glass Candle\n[00:05.00]制作人 : XanthanL"
+  },
+  {
+    id: "3",
+    title: "Les Nuits",
+    artist: "XanthanL",
+    src: "/music/Les Nuits.mp3",
+    cover: "/images/album-uncertainty.jpg",
+    duration: "04:50"
+  },
+  {
+    id: "4",
+    title: "Midnight Chill",
+    artist: "XanthanL",
+    src: "/music/Midnight Chill.mp3",
+    cover: "/images/album-uncertainty.jpg",
+    duration: "03:30"
+  },
+  {
+    id: "5",
+    title: "spring 2 summer",
+    artist: "XanthanL",
+    src: "/music/spring 2 summer.mp3",
+    cover: "/images/album-uncertainty.jpg",
+    duration: "03:15"
   }
 ];

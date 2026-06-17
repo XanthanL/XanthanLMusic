@@ -11,7 +11,10 @@ const albums = [
     description: 'A hypnotic fusion of synth-pop and neo-psychedelia. Explore the shimmering textures of disco-infused rhythms and ethereal soundscapes.',
     tracks: [
       { name: 'Electric Mirage', type: 'Single' },
-      { name: 'Glass Candle', type: 'B-Side' }
+      { name: 'Glass Candle', type: 'Single' },
+      { name: 'Les Nuits', type: 'Single' },
+      { name: 'Midnight Chill', type: 'Single' },
+      { name: 'spring 2 summer', type: 'Single' }
     ],
     musicUrl: 'https://music.163.com/#/album?id=373726685',
     platform: 'NetEase Cloud Music',
