@@ -91,63 +91,8 @@ export function Music() {
         </ScrollReveal>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-          {/* Left Column: Intro & Tracklist */}
-          <ScrollReveal direction="left" className="space-y-8">
-            <div className="space-y-4">
-              <h3 className="font-['Orbitron'] text-2xl font-bold text-white">Electric Mirage</h3>
-              <p className="text-white/60 max-w-md leading-relaxed">
-                Synth-pop drenched in 80s disco drums and neo-psychedelic textures. 
-                Phasing effects and ethereal vocals define the sound of XanthanL.
-              </p>
-              <p className="text-white/40 text-sm italic">
-                A hypnotic fusion of synth-pop and neo-psychedelia. Explore the shimmering textures of disco-infused rhythms and ethereal soundscapes.
-              </p>
-            </div>
-
-            <div className="space-y-2 mt-8">
-              {XANTHANL_PLAYLIST.map((song, index) => (
-                <motion.div
-                  key={song.id}
-                  whileHover={{ x: 10 }}
-                  onClick={() => playSong(index)}
-                  className={`group flex items-center gap-4 p-4 rounded-xl cursor-pointer transition-all ${
-                    currentIndex === index 
-                      ? 'bg-white/10 border border-white/20' 
-                      : 'hover:bg-white/5 border border-transparent'
-                  }`}
-                >
-                  <span className={`font-['Orbitron'] text-xs w-6 ${
-                    currentIndex === index ? 'text-[var(--neon-purple)]' : 'text-white/20'
-                  }`}>
-                    {String(index + 1).padStart(2, '0')}
-                  </span>
-                  <div className="flex-1">
-                    <h4 className={`text-sm font-medium tracking-wide transition-colors ${
-                      currentIndex === index ? 'text-white' : 'text-white/70 group-hover:text-white'
-                    }`}>
-                      {song.title}
-                    </h4>
-                    <p className="text-[10px] text-white/30 uppercase tracking-widest">{song.artist}</p>
-                  </div>
-                  {currentIndex === index && isPlaying && (
-                    <div className="flex gap-1 items-end h-3">
-                      {[1, 2, 3].map(i => (
-                        <motion.div
-                          key={i}
-                          animate={{ height: [4, 12, 4] }}
-                          transition={{ repeat: Infinity, duration: 0.5, delay: i * 0.1 }}
-                          className="w-0.5 bg-[var(--neon-purple)]"
-                        />
-                      ))}
-                    </div>
-                  )}
-                </motion.div>
-              ))}
-            </div>
-          </ScrollReveal>
-
-          {/* Right Column: Player Interface */}
-          <ScrollReveal direction="right">
+          {/* Left Column: Player Interface */}
+          <ScrollReveal direction="left">
             <div className="relative group p-8 rounded-3xl bg-white/[0.03] border border-white/10 backdrop-blur-xl shadow-2xl overflow-hidden">
               {/* Background Glow */}
               <div className="absolute top-0 right-0 w-64 h-64 bg-[var(--neon-purple)]/10 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2" />
@@ -257,6 +202,61 @@ export function Music() {
                   </div>
                 </div>
               </div>
+            </div>
+          </ScrollReveal>
+
+          {/* Right Column: Intro & Tracklist */}
+          <ScrollReveal direction="right" className="space-y-8">
+            <div className="space-y-4">
+              <h3 className="font-['Orbitron'] text-2xl font-bold text-white">Electric Mirage</h3>
+              <p className="text-white/60 max-w-md leading-relaxed">
+                Synth-pop drenched in 80s disco drums and neo-psychedelic textures. 
+                Phasing effects and ethereal vocals define the sound of XanthanL.
+              </p>
+              <p className="text-white/40 text-sm italic">
+                A hypnotic fusion of synth-pop and neo-psychedelia. Explore the shimmering textures of disco-infused rhythms and ethereal soundscapes.
+              </p>
+            </div>
+
+            <div className="space-y-2 mt-8">
+              {XANTHANL_PLAYLIST.map((song, index) => (
+                <motion.div
+                  key={song.id}
+                  whileHover={{ x: 10 }}
+                  onClick={() => playSong(index)}
+                  className={`group flex items-center gap-4 p-4 rounded-xl cursor-pointer transition-all ${
+                    currentIndex === index 
+                      ? 'bg-white/10 border border-white/20' 
+                      : 'hover:bg-white/5 border border-transparent'
+                  }`}
+                >
+                  <span className={`font-['Orbitron'] text-xs w-6 ${
+                    currentIndex === index ? 'text-[var(--neon-purple)]' : 'text-white/20'
+                  }`}>
+                    {String(index + 1).padStart(2, '0')}
+                  </span>
+                  <div className="flex-1">
+                    <h4 className={`text-sm font-medium tracking-wide transition-colors ${
+                      currentIndex === index ? 'text-white' : 'text-white/70 group-hover:text-white'
+                    }`}>
+                      {song.title}
+                    </h4>
+                    <p className="text-[10px] text-white/30 uppercase tracking-widest">{song.artist}</p>
+                  </div>
+                  {currentIndex === index && isPlaying && (
+                    <div className="flex gap-1 items-end h-3">
+                      {[1, 2, 3].map(i => (
+                        <motion.div
+                          key={i}
+                          animate={{ height: [4, 12, 4] }}
+                          transition={{ repeat: Infinity, duration: 0.5, delay: i * 0.1 }}
+                          className="w-0.5 bg-[var(--neon-purple)]"
+                        />
+                      ))}
+                    </div>
+                  )}
+                </motion.div>
+              ))}
             </div>
           </ScrollReveal>
         </div>
