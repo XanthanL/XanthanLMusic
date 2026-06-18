@@ -85,7 +85,7 @@ export function About() {
                   className="absolute -bottom-6 left-1/2 -translate-x-1/2 px-6 py-3 bg-black/90 backdrop-blur-sm border border-white/10 rounded-full"
                 >
                   <span className="text-sm uppercase tracking-widest text-white/80">
-                    Anonymous Since 2013
+                    2026
                   </span>
                 </motion.div>
               </div>

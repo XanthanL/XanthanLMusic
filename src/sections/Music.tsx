@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Play, Pause, SkipBack, SkipForward, Volume2 } from 'lucide-react';
 import { ScrollReveal } from '../components/ScrollReveal';
-import { XANTHANL_PLAYLIST } from '../../apps/web/config/music';
+import { XANTHANL_PLAYLIST } from '../config/music';
 
 export function Music() {
   const [currentIndex, setCurrentIndex] = useState(0);
