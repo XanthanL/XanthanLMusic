@@ -76,13 +76,9 @@ export function About() {
                   {/* Gradient overlays */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                   <div className="absolute inset-0 bg-gradient-to-r from-[var(--neon-purple)]/10 via-transparent to-[var(--neon-blue)]/10" />
-                </div>
+                  </div>
 
-                {/* Decorative elements */}
-                <div className="absolute -top-4 -right-4 w-24 h-24 border border-[var(--neon-purple)]/30 rounded-lg" />
-                <div className="absolute -bottom-4 -left-4 w-32 h-32 border border-[var(--neon-pink)]/30 rounded-lg" />
-                
-                {/* Floating badge */}
+                  {/* Floating badge */}
                 <motion.div
                   animate={{ y: [0, -10, 0] }}
                   transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
