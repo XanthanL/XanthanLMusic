@@ -1,31 +1,58 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Play, Pause, SkipBack, SkipForward, Volume2 } from 'lucide-react';
+import { Play, Pause, SkipBack, SkipForward, Volume2, Loader2 } from 'lucide-react';
 import { ScrollReveal } from '../components/ScrollReveal';
 import { XANTHANL_PLAYLIST } from '../config/music';
+import { useStreamingAudio } from '../hooks/useStreamingAudio';
 
 export function Music() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [currentTime, setCurrentTime] = useState(0);
-  const [duration, setDuration] = useState(0);
-  const [volume, setVolume] = useState(0.5);
-  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const [volume, setVolumeState] = useState(0.5);
+
+  const {
+    streamingState,
+    currentTime,
+    duration,
+    play: streamPlay,
+    pause: streamPause,
+    seek: streamSeek,
+    setVolume: streamSetVolume,
+    loadSong,
+    setOnEnded,
+  } = useStreamingAudio();
 
   const currentSong = XANTHANL_PLAYLIST[currentIndex];
+  const prevSongRef = useRef<string>('');
 
+  // 注册播放结束回调
   useEffect(() => {
-    if (audioRef.current) {
-      audioRef.current.volume = 0.5;
+    setOnEnded(() => {
+      setCurrentIndex((prev) => (prev + 1) % XANTHANL_PLAYLIST.length);
+    });
+  }, [setOnEnded]);
+
+  // 加载歌曲
+  useEffect(() => {
+    if (currentSong.src !== prevSongRef.current) {
+      prevSongRef.current = currentSong.src;
+      loadSong(currentSong.src);
     }
-  }, []);
+  }, [currentSong.src, loadSong]);
+
+  // 自动播放切换后
+  useEffect(() => {
+    if (isPlaying && streamingState.isReady && !streamingState.isBuffering) {
+      streamPlay().catch(() => {});
+    }
+  }, [currentIndex, isPlaying, streamingState.isReady, streamingState.isBuffering, streamPlay]);
 
   const togglePlay = () => {
-    if (!audioRef.current) return;
+    if (streamingState.isBuffering && !streamingState.isReady) return;
     if (isPlaying) {
-      audioRef.current.pause();
+      streamPause();
     } else {
-      audioRef.current.play().catch(err => console.error("Playback failed:", err));
+      streamPlay().catch(() => {});
     }
     setIsPlaying(!isPlaying);
   };
@@ -33,7 +60,6 @@ export function Music() {
   const playSong = (index: number) => {
     setCurrentIndex(index);
     setIsPlaying(true);
-    // Audio src will change, useEffect handles playing
   };
 
   const handleNext = () => {
@@ -44,30 +70,15 @@ export function Music() {
     setCurrentIndex((prev) => (prev - 1 + XANTHANL_PLAYLIST.length) % XANTHANL_PLAYLIST.length);
   };
 
-  useEffect(() => {
-    if (audioRef.current && isPlaying) {
-      audioRef.current.play().catch(err => console.error("Playback failed:", err));
-    }
-  }, [currentIndex, isPlaying]);
-
-  const handleTimeUpdate = () => {
-    if (audioRef.current) {
-      setCurrentTime(audioRef.current.currentTime);
-    }
-  };
-
-  const handleLoadedMetadata = () => {
-    if (audioRef.current) {
-      setDuration(audioRef.current.duration);
-    }
-  };
-
   const handleSeek = (e: React.ChangeEvent<HTMLInputElement>) => {
     const time = parseFloat(e.target.value);
-    setCurrentTime(time);
-    if (audioRef.current) {
-      audioRef.current.currentTime = time;
-    }
+    streamSeek(time);
+  };
+
+  const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const v = parseFloat(e.target.value);
+    setVolumeState(v);
+    streamSetVolume(v);
   };
 
   const formatTime = (time: number) => {
@@ -139,14 +150,21 @@ export function Music() {
                 <div className="space-y-6">
                   {/* Progress Bar */}
                   <div className="space-y-2">
-                    <input
-                      type="range"
-                      min="0"
-                      max={duration || 100}
-                      value={currentTime}
-                      onChange={handleSeek}
-                      className="w-full h-1 bg-white/10 rounded-lg appearance-none cursor-pointer accent-[var(--neon-purple)] [&::-webkit-slider-thumb]:w-2 [&::-webkit-slider-thumb]:h-2 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:rounded-full"
-                    />
+                    <div className="relative">
+                      {/* Buffer progress background */}
+                      <div
+                        className="absolute h-1 bg-white/5 rounded-lg"
+                        style={{ width: `${streamingState.bufferProgress}%` }}
+                      />
+                      <input
+                        type="range"
+                        min="0"
+                        max={duration || 100}
+                        value={currentTime}
+                        onChange={handleSeek}
+                        className="relative w-full h-1 bg-white/10 rounded-lg appearance-none cursor-pointer accent-[var(--neon-purple)] [&::-webkit-slider-thumb]:w-2 [&::-webkit-slider-thumb]:h-2 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:rounded-full"
+                      />
+                    </div>
                     <div className="flex justify-between text-[10px] font-['Orbitron'] text-white/40 tracking-widest">
                       <span>{formatTime(currentTime)}</span>
                       <span>{formatTime(duration)}</span>
@@ -155,7 +173,7 @@ export function Music() {
 
                   {/* Main Buttons */}
                   <div className="flex items-center justify-center gap-8">
-                    <button 
+                    <button
                       onClick={handlePrev}
                       className="text-white/60 hover:text-white transition-colors"
                     >
@@ -166,16 +184,19 @@ export function Music() {
                       whileHover={{ scale: 1.1 }}
                       whileTap={{ scale: 0.95 }}
                       onClick={togglePlay}
-                      className="w-16 h-16 rounded-full bg-gradient-to-r from-[var(--neon-purple)] to-[var(--neon-pink)] flex items-center justify-center shadow-[0_0_20px_rgba(176,38,255,0.3)]"
+                      disabled={streamingState.isBuffering && !streamingState.isReady}
+                      className="w-16 h-16 rounded-full bg-gradient-to-r from-[var(--neon-purple)] to-[var(--neon-pink)] flex items-center justify-center shadow-[0_0_20px_rgba(176,38,255,0.3)] disabled:opacity-50 disabled:cursor-not-allowed"
                     >
-                      {isPlaying ? (
+                      {streamingState.isBuffering && !streamingState.isReady ? (
+                        <Loader2 size={28} className="text-white animate-spin" />
+                      ) : isPlaying ? (
                         <Pause size={28} className="text-white" fill="white" />
                       ) : (
                         <Play size={28} className="text-white ml-1" fill="white" />
                       )}
                     </motion.button>
 
-                    <button 
+                    <button
                       onClick={handleNext}
                       className="text-white/60 hover:text-white transition-colors"
                     >
@@ -192,14 +213,25 @@ export function Music() {
                       max="1"
                       step="0.01"
                       value={volume}
-                      onChange={(e) => {
-                        const v = parseFloat(e.target.value);
-                        setVolume(v);
-                        if (audioRef.current) audioRef.current.volume = v;
-                      }}
+                      onChange={handleVolumeChange}
                       className="w-24 h-1 bg-white/10 rounded-lg appearance-none cursor-pointer accent-white/40 [&::-webkit-slider-thumb]:w-2 [&::-webkit-slider-thumb]:h-2 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:rounded-full"
                     />
                   </div>
+
+                  {/* Buffering indicator */}
+                  {streamingState.isBuffering && streamingState.isReady && (
+                    <div className="flex items-center justify-center gap-2 text-xs text-white/40">
+                      <Loader2 size={12} className="animate-spin" />
+                      <span>Buffering... {Math.round(streamingState.bufferProgress)}%</span>
+                    </div>
+                  )}
+
+                  {/* Error message */}
+                  {streamingState.error && (
+                    <div className="text-center text-xs text-red-400">
+                      {streamingState.error}
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
@@ -261,15 +293,6 @@ export function Music() {
           </ScrollReveal>
         </div>
       </div>
-      
-      {/* Hidden Audio Element */}
-      <audio
-        ref={audioRef}
-        src={currentSong.src}
-        onTimeUpdate={handleTimeUpdate}
-        onLoadedMetadata={handleLoadedMetadata}
-        onEnded={handleNext}
-      />
 
       {/* Background decoration */}
       <div className="absolute top-1/2 left-0 w-96 h-96 bg-[var(--neon-purple)]/5 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2 pointer-events-none" />
