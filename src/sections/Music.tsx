@@ -4,6 +4,7 @@ import { Play, Pause, SkipBack, SkipForward, Volume2, Loader2 } from 'lucide-rea
 import { ScrollReveal } from '../components/ScrollReveal';
 import { XANTHANL_PLAYLIST } from '../config/music';
 import { useStreamingAudio } from '../hooks/useStreamingAudio';
+import { useTranslation } from '../hooks/useTranslation';
 
 export function Music() {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -24,6 +25,7 @@ export function Music() {
 
   const currentSong = XANTHANL_PLAYLIST[currentIndex];
   const prevSongRef = useRef<string>('');
+  const { t } = useTranslation();
 
   // 注册播放结束回调
   useEffect(() => {
@@ -95,7 +97,7 @@ export function Music() {
           <div className="flex items-end justify-between flex-wrap gap-4">
             <div>
               <h2 className="font-['Orbitron'] text-4xl md:text-5xl lg:text-6xl font-bold">
-                <span className="neon-text-glow">Music</span>
+                <span className="neon-text-glow">{t('music.title')}</span>
               </h2>
             </div>
           </div>
@@ -227,14 +229,14 @@ export function Music() {
                   {streamingState.isBuffering && streamingState.isReady && (
                     <div className="flex items-center justify-center gap-2 text-xs text-white/40">
                       <Loader2 size={12} className="animate-spin" />
-                      <span>Buffering... {Math.round(streamingState.bufferProgress)}%</span>
+                      <span>{t('music.buffering')}... {Math.round(streamingState.bufferProgress)}%</span>
                     </div>
                   )}
 
                   {/* Error message */}
                   {streamingState.error && (
                     <div className="text-center text-xs text-red-400">
-                      {streamingState.error}
+                      {t('music.networkError')}
                     </div>
                   )}
                 </div>
@@ -245,13 +247,12 @@ export function Music() {
           {/* Right Column: Intro & Tracklist */}
           <ScrollReveal direction="right" className="space-y-8">
             <div className="space-y-4">
-              <h3 className="font-['Orbitron'] text-2xl font-bold text-white">Electric Mirage</h3>
+              <h3 className="font-['Orbitron'] text-2xl font-bold text-white">{t('music.albumTitle')}</h3>
               <p className="text-white/60 max-w-md leading-relaxed">
-                Synth-pop drenched in 80s disco drums and neo-psychedelic textures. 
-                Phasing effects and ethereal vocals define the sound of XanthanL.
+                {t('music.albumDesc')}
               </p>
               <p className="text-white/40 text-sm italic">
-                A hypnotic fusion of synth-pop and neo-psychedelia. Explore the shimmering textures of disco-infused rhythms and ethereal soundscapes.
+                {t('music.albumMeta')}
               </p>
             </div>
 

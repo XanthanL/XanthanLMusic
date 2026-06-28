@@ -5,6 +5,7 @@ import { Hero } from './sections/Hero';
 import { Music } from './sections/Music';
 import { About } from './sections/About';
 import { Footer } from './sections/Footer';
+import { LanguageProvider } from './contexts/LanguageContext';
 import './App.css';
 
 function ScrollProgress() {
@@ -27,24 +28,26 @@ function ScrollProgress() {
 
 function App() {
   return (
-    <div className="relative min-h-screen bg-black text-white overflow-x-hidden">
-      {/* Starfield background */}
-      <StarfieldBackground />
-      
-      {/* Scroll progress indicator */}
-      <ScrollProgress />
-      
-      {/* Navigation */}
-      <Navigation />
-      
-      {/* Main content */}
-      <main className="relative z-10">
-        <Hero />
-        <Music />
-        <About />
-        <Footer />
-      </main>
-    </div>
+    <LanguageProvider>
+      <div className="relative min-h-screen bg-black text-white overflow-x-hidden">
+        {/* Starfield background */}
+        <StarfieldBackground />
+
+        {/* Scroll progress indicator */}
+        <ScrollProgress />
+
+        {/* Navigation */}
+        <Navigation />
+
+        {/* Main content */}
+        <main className="relative z-10">
+          <Hero />
+          <Music />
+          <About />
+          <Footer />
+        </main>
+      </div>
+    </LanguageProvider>
   );
 }
 

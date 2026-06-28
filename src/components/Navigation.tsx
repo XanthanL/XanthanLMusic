@@ -1,15 +1,19 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
+import { useLanguage } from '../contexts/LanguageContext';
+import { useTranslation } from '../hooks/useTranslation';
 
 const navLinks = [
-  { href: '#music', label: 'Music' },
-  { href: '#about', label: 'About' },
+  { href: '#music', key: 'nav.music' as const },
+  { href: '#about', key: 'nav.about' as const },
 ];
 
 export function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { toggleLanguage, language } = useLanguage();
+  const { t } = useTranslation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -19,6 +23,8 @@ export function Navigation() {
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  const langLabel = language === 'en' ? 'ZH' : 'EN';
 
   return (
     <>
@@ -41,22 +47,38 @@ export function Navigation() {
             </a>
 
             {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center gap-10">
+            <div className="hidden md:flex items-center gap-8">
               {navLinks.map((link) => (
                 <a key={link.href} href={link.href} className="nav-link">
-                  {link.label}
+                  {t(link.key)}
                 </a>
               ))}
+              <button
+                onClick={toggleLanguage}
+                className="ml-2 px-3 py-1 text-xs font-medium uppercase tracking-widest text-white/70 border border-white/10 rounded-full hover:border-[var(--neon-purple)] hover:text-[var(--neon-purple)] transition-colors"
+                aria-label="Toggle language"
+              >
+                {langLabel}
+              </button>
             </div>
 
-            {/* Mobile Menu Button */}
-            <button
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="md:hidden p-2 text-white hover:text-[var(--neon-purple)] transition-colors"
-              aria-label="Toggle menu"
-            >
-              {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-            </button>
+            {/* Mobile controls */}
+            <div className="flex items-center gap-3 md:hidden">
+              <button
+                onClick={toggleLanguage}
+                className="px-3 py-1 text-xs font-medium uppercase tracking-widest text-white/70 border border-white/10 rounded-full hover:border-[var(--neon-purple)] hover:text-[var(--neon-purple)] transition-colors"
+                aria-label="Toggle language"
+              >
+                {langLabel}
+              </button>
+              <button
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                className="p-2 text-white hover:text-[var(--neon-purple)] transition-colors"
+                aria-label="Toggle menu"
+              >
+                {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+              </button>
+            </div>
           </div>
         </div>
       </motion.nav>
@@ -82,7 +104,7 @@ export function Navigation() {
                   onClick={() => setIsMobileMenuOpen(false)}
                   className="font-['Orbitron'] text-2xl font-bold text-white hover:text-[var(--neon-purple)] transition-colors"
                 >
-                  {link.label}
+                  {t(link.key)}
                 </motion.a>
               ))}
             </div>

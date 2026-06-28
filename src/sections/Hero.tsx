@@ -1,6 +1,7 @@
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { useEffect, useRef } from 'react';
 import { ChevronDown } from 'lucide-react';
+import { useTranslation } from '../hooks/useTranslation';
 
 export function Hero() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -52,6 +53,7 @@ export function Hero() {
   };
 
   const title = 'XANTHANL';
+  const { t } = useTranslation();
 
   return (
     <section
@@ -125,7 +127,7 @@ export function Hero() {
           transition={{ duration: 0.6, delay: 1.2, ease: [0.16, 1, 0.3, 1] }}
           className="font-['Space_Grotesk'] text-lg md:text-xl lg:text-2xl text-white/80 tracking-[0.3em] uppercase mb-12"
         >
-          Synth-Pop • Neo-Psychedelic
+          {t('hero.subtitle')}
         </motion.p>
 
         {/* CTA Buttons */}
@@ -139,7 +141,7 @@ export function Hero() {
             href="#music"
             className="ghost-button rounded-full px-12 py-4 text-xs tracking-[0.3em] uppercase"
           >
-            Enter
+            {t('hero.cta')}
           </a>
         </motion.div>
       </div>
@@ -157,7 +159,7 @@ export function Hero() {
           transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
           className="flex flex-col items-center gap-2"
         >
-          <span className="text-xs uppercase tracking-widest text-white/50 group-hover:text-[var(--neon-purple)] transition-colors">Scroll</span>
+          <span className="text-xs uppercase tracking-widest text-white/50 group-hover:text-[var(--neon-purple)] transition-colors">{t('hero.scroll')}</span>
           <ChevronDown className="w-5 h-5 text-white/50 group-hover:text-[var(--neon-purple)] transition-colors" />
         </motion.div>
       </motion.a>

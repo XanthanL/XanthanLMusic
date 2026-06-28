@@ -1,4 +1,5 @@
 import { ScrollReveal } from '../components/ScrollReveal';
+import { useTranslation } from '../hooks/useTranslation';
 
 const relatedWorks = [
   { label: 'Diagonal Art', href: 'https://www.diagonal-art.com/' },
@@ -10,6 +11,8 @@ const relatedWorks = [
 ];
 
 export function Footer() {
+  const { t } = useTranslation();
+
   return (
     <footer className="relative pt-20 pb-10 border-t border-white/5">
       {/* Background gradient */}
@@ -30,19 +33,10 @@ export function Footer() {
 
           <ScrollReveal delay={0.1}>
             <div className="max-w-xl mx-auto space-y-4 mb-8 text-white/60 leading-relaxed">
-              <p>
-                XanthanL is a synthetic phantom drifting between sound, image, and code —
-                a solo project born from neon-lit dreams and late-night experiments.
-              </p>
-              <p>
-                Behind the mask lies a restless creator: the same hands that shape
-                synth-pop mirages have built visual worlds, architectural sketches,
-                travel memories, and digital tools. Each project is a fragment of the
-                same obsession — capturing fleeting beauty in structured form.
-              </p>
-              <p className="text-white/40 text-sm italic">
-                Follow the signals. Not everything is meant to be understood.
-              </p>
+              <p>{t('footer.tagline')}</p>
+              <p>{t('footer.description1')}</p>
+              <p>{t('footer.description2')}</p>
+              <p className="text-white/40 text-sm italic">{t('footer.hint')}</p>
             </div>
           </ScrollReveal>
         </div>
@@ -51,7 +45,7 @@ export function Footer() {
         <ScrollReveal delay={0.2}>
           <div className="max-w-3xl mx-auto mb-16">
             <h3 className="text-xs uppercase tracking-[0.3em] text-white/30 mb-6 text-center">
-              More Works
+              {t('footer.moreWorks')}
             </h3>
             <div className="flex flex-wrap items-center justify-center gap-3">
               {relatedWorks.map((work) => (
@@ -76,7 +70,7 @@ export function Footer() {
         <div className="flex flex-col md:flex-row items-center justify-center gap-4">
           {/* Copyright */}
           <p className="text-[10px] text-white/20 uppercase tracking-widest">
-            © 2026 XanthanL
+            {t('footer.copyright')}
           </p>
         </div>
       </div>
