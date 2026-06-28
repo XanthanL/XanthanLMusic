@@ -106,7 +106,7 @@ export function Music() {
           <ScrollReveal direction="left">
             <div className="relative group p-8 rounded-3xl bg-white/[0.03] border border-white/10 backdrop-blur-xl shadow-2xl overflow-hidden">
               {/* Background Glow */}
-              <div className="absolute top-0 right-0 w-64 h-64 bg-[var(--neon-purple)]/10 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2" />
+              <div className="absolute top-0 right-0 w-64 h-64 bg-[var(--music-accent)]/10 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2" />
               
               <div className="relative z-10 flex flex-col gap-8">
                 {/* Album Cover Area */}
@@ -150,11 +150,16 @@ export function Music() {
                 <div className="space-y-6">
                   {/* Progress Bar */}
                   <div className="space-y-2">
-                    <div className="relative">
-                      {/* Buffer progress background */}
+                    <div className="relative h-1 rounded-lg bg-white/10 overflow-hidden">
+                      {/* Buffered progress */}
                       <div
-                        className="absolute h-1 bg-white/5 rounded-lg"
+                        className="absolute inset-y-0 left-0 rounded-lg bg-gradient-to-r from-[var(--neon-purple)]/40 to-[var(--neon-pink)]/40"
                         style={{ width: `${streamingState.bufferProgress}%` }}
+                      />
+                      {/* Playback progress */}
+                      <div
+                        className="absolute inset-y-0 left-0 rounded-lg bg-gradient-to-r from-[var(--neon-purple)] to-[var(--neon-pink)]"
+                        style={{ width: `${duration ? (currentTime / duration) * 100 : 0}%` }}
                       />
                       <input
                         type="range"
@@ -162,7 +167,7 @@ export function Music() {
                         max={duration || 100}
                         value={currentTime}
                         onChange={handleSeek}
-                        className="relative w-full h-1 bg-white/10 rounded-lg appearance-none cursor-pointer accent-[var(--neon-purple)] [&::-webkit-slider-thumb]:w-2 [&::-webkit-slider-thumb]:h-2 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:rounded-full"
+                        className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
                       />
                     </div>
                     <div className="flex justify-between text-[10px] font-['Orbitron'] text-white/40 tracking-widest">
@@ -257,13 +262,13 @@ export function Music() {
                   whileHover={{ x: 10 }}
                   onClick={() => playSong(index)}
                   className={`group flex items-center gap-4 p-4 rounded-xl cursor-pointer transition-all ${
-                    currentIndex === index 
-                      ? 'bg-white/10 border border-white/20' 
+                    currentIndex === index
+                      ? 'bg-white/10 border-l-2 border-l-[var(--music-accent)] border-y-transparent border-r-transparent'
                       : 'hover:bg-white/5 border border-transparent'
                   }`}
                 >
                   <span className={`font-['Orbitron'] text-xs w-6 ${
-                    currentIndex === index ? 'text-[var(--neon-purple)]' : 'text-white/20'
+                    currentIndex === index ? 'text-[var(--music-accent)]' : 'text-white/20'
                   }`}>
                     {String(index + 1).padStart(2, '0')}
                   </span>
@@ -282,7 +287,7 @@ export function Music() {
                           key={i}
                           animate={{ height: [4, 12, 4] }}
                           transition={{ repeat: Infinity, duration: 0.5, delay: i * 0.1 }}
-                          className="w-0.5 bg-[var(--neon-purple)]"
+                          className="w-0.5 bg-[var(--music-accent)]"
                         />
                       ))}
                     </div>
@@ -295,7 +300,7 @@ export function Music() {
       </div>
 
       {/* Background decoration */}
-      <div className="absolute top-1/2 left-0 w-96 h-96 bg-[var(--neon-purple)]/5 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2 pointer-events-none" />
+      <div className="absolute top-1/2 left-0 w-96 h-96 bg-[var(--music-accent)]/5 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2 pointer-events-none" />
     </section>
   );
 }

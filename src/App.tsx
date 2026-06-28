@@ -5,6 +5,7 @@ import { Hero } from './sections/Hero';
 import { Music } from './sections/Music';
 import { About } from './sections/About';
 import { Footer } from './sections/Footer';
+import './App.css';
 
 function ScrollProgress() {
   const { scrollYProgress } = useScroll();
@@ -16,10 +17,10 @@ function ScrollProgress() {
 
   return (
     <motion.div
-      className="fixed right-0 top-0 bottom-0 w-1 bg-white/5 z-50 origin-top"
+      className="fixed right-[14px] top-0 bottom-0 w-1 bg-white/5 z-50 origin-top rounded-full"
       style={{ scaleY }}
     >
-      <div className="absolute inset-0 bg-gradient-to-b from-[var(--neon-purple)] via-[var(--neon-pink)] to-[var(--neon-blue)]" />
+      <div className="absolute inset-0 bg-gradient-to-b from-[var(--neon-purple)] via-[var(--neon-pink)] to-[var(--neon-blue)] rounded-full" />
     </motion.div>
   );
 }

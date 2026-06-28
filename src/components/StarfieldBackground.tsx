@@ -153,12 +153,21 @@ export function StarfieldBackground() {
     };
     document.addEventListener('visibilitychange', handleVisibilityChange);
 
+    // Respect reduced motion preference
+    const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const handleMotionChange = () => {
+      isActiveRef.current = !motionQuery.matches && document.visibilityState === 'visible';
+    };
+    motionQuery.addEventListener('change', handleMotionChange);
+    handleMotionChange();
+
     animationRef.current = requestAnimationFrame(animate);
 
     return () => {
       window.removeEventListener('resize', handleResize);
       window.removeEventListener('mousemove', handleMouseMove);
       document.removeEventListener('visibilitychange', handleVisibilityChange);
+      motionQuery.removeEventListener('change', handleMotionChange);
       if (animationRef.current) {
         cancelAnimationFrame(animationRef.current);
       }

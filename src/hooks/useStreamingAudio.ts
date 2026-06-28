@@ -8,7 +8,6 @@ interface StreamingState {
 }
 
 interface UseStreamingAudioReturn {
-  audioRef: React.RefObject<HTMLAudioElement | null>;
   streamingState: StreamingState;
   currentTime: number;
   duration: number;
@@ -272,7 +271,6 @@ export function useStreamingAudio(): UseStreamingAudioReturn {
   }, []);
 
   return {
-    audioRef: audioRef as React.RefObject<HTMLAudioElement | null>,
     streamingState,
     currentTime,
     duration,

@@ -145,21 +145,22 @@ export function Hero() {
       </div>
 
       {/* Scroll indicator */}
-      <motion.div
+      <motion.a
+        href="#music"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 2, duration: 0.6 }}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20"
+        className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 cursor-pointer group"
       >
         <motion.div
           animate={{ y: [0, 10, 0] }}
           transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
           className="flex flex-col items-center gap-2"
         >
-          <span className="text-xs uppercase tracking-widest text-white/50">Scroll</span>
-          <ChevronDown className="w-5 h-5 text-white/50" />
+          <span className="text-xs uppercase tracking-widest text-white/50 group-hover:text-[var(--neon-purple)] transition-colors">Scroll</span>
+          <ChevronDown className="w-5 h-5 text-white/50 group-hover:text-[var(--neon-purple)] transition-colors" />
         </motion.div>
-      </motion.div>
+      </motion.a>
     </section>
   );
 }

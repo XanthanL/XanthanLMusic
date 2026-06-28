@@ -20,11 +20,11 @@ export function About() {
           {/* Text content */}
           <motion.div style={{ y: textY }} className="order-2 lg:order-1">
             <ScrollReveal direction="left">
-              <span className="text-sm uppercase tracking-widest text-[var(--neon-purple)] mb-4 block">
+              <span className="text-sm uppercase tracking-widest text-[var(--about-accent)] mb-4 block">
                 The Vision
               </span>
               <h2 className="font-['Orbitron'] text-4xl md:text-5xl lg:text-6xl font-bold mb-8">
-                <span className="neon-text-glow">XanthanL</span>
+                <span className="text-[var(--about-accent)] neon-text-glow">XanthanL</span>
               </h2>
             </ScrollReveal>
 
@@ -75,7 +75,7 @@ export function About() {
                   
                   {/* Gradient overlays */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                  <div className="absolute inset-0 bg-gradient-to-r from-[var(--neon-purple)]/10 via-transparent to-[var(--neon-blue)]/10" />
+                  <div className="absolute inset-0 bg-gradient-to-r from-[var(--about-accent)]/10 via-transparent to-[var(--neon-cyan)]/10" />
                   </div>
 
                   {/* Floating badge */}
@@ -95,7 +95,7 @@ export function About() {
       </div>
 
       {/* Background decorations */}
-      <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-[var(--neon-purple)]/5 rounded-full blur-3xl -translate-x-1/2 translate-y-1/2 pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-[var(--about-accent)]/5 rounded-full blur-3xl -translate-x-1/2 translate-y-1/2 pointer-events-none" />
     </section>
   );
 }
